@@ -10,13 +10,16 @@ class World:
         self.tiles = np.zeros((self.width, self.height), dtype=int)  # 0: grass, 1: dirt
         self.generate_map()
         # Load tile images (fallback to colors if missing)
+        self.grass_img = None
+        self.dirt_img = None
         try:
-            self.grass_img = pygame.image.load(os.path.join(ASSETS_PATH, 'tiles', 'grass.png')).convert()
-            self.dirt_img = pygame.image.load(os.path.join(ASSETS_PATH, 'tiles', 'dirt.png')).convert()
-        except pygame.error:
-            print("Warning: Tile PNGs not found. Using color fallbacks.")
-            self.grass_img = None
-            self.dirt_img = None
+            grass_path = os.path.join(ASSETS_PATH, 'tiles', 'grass.png')
+            dirt_path = os.path.join(ASSETS_PATH, 'tiles', 'dirt.png')
+            self.grass_img = pygame.image.load(grass_path).convert()
+            self.dirt_img = pygame.image.load(dirt_path).convert()
+            print(f"Loaded tiles: {grass_path} and {dirt_path}")
+        except Exception as e:  # Widened to catch any issues
+            print(f"Warning: Failed to load tile PNGs ({e}). Using color fallbacks.")
 
     def generate_map(self):
         # Simple random "procedural" for prototype; use Perlin later
