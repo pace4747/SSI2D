@@ -12,7 +12,10 @@ def generate_grass():
     for _ in range(50):  # Random pixels
         x, y = random.randint(0, TILE_SIZE-1), random.randint(0, TILE_SIZE-1)
         shade = random.randint(0, 50)  # Lighter greens
-        surf.set_at((x, y), (0 + shade, 255 - shade, 0 + shade))
+        r = max(0, min(255, 0 + shade))
+        g = max(0, min(255, 255 - shade))
+        b = max(0, min(255, 0 + shade))
+        surf.set_at((x, y), (r, g, b))
     return surf
 
 def generate_dirt():
@@ -22,7 +25,10 @@ def generate_dirt():
     for _ in range(30):
         x, y = random.randint(0, TILE_SIZE-1), random.randint(0, TILE_SIZE-1)
         shade = random.randint(-20, 20)  # Variations
-        surf.set_at((x, y), (139 + shade, 69 + shade, 19 + shade))
+        r = max(0, min(255, 139 + shade))
+        g = max(0, min(255, 69 + shade))
+        b = max(0, min(255, 19 + shade))
+        surf.set_at((x, y), (r, g, b))
     return surf
 
 # Create folder if needed
@@ -33,4 +39,4 @@ os.makedirs(tiles_path, exist_ok=True)
 pygame.image.save(generate_grass(), os.path.join(tiles_path, 'grass.png'))
 pygame.image.save(generate_dirt(), os.path.join(tiles_path, 'dirt.png'))
 
-print("Placeholder PNGs generated in assets/tiles/")
+print("Placeholder PNGs generated successfully in assets/tiles/")
