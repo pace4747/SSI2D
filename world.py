@@ -1,13 +1,22 @@
 import pygame
 import numpy as np
+import os
 from constants import *
 
 class World:
     def __init__(self, width, height):
         self.width = width
         self.height = height
-        self.tiles = np.zeros((self.width, self.height), dtype=int)  # Fixed: (width, height)
+        self.tiles = np.zeros((self.width, self.height), dtype=int)  # 0: grass, 1: dirt
         self.generate_map()
+        # Load tile images (fallback to colors if missing)
+        try:
+            self.grass_img = pygame.image.load(os.path.join(ASSETS_PATH, 'tiles', 'grass.png')).convert()
+            self.dirt_img = pygame.image.load(os.path.join(ASSETS_PATH, 'tiles', 'dirt.png')).convert()
+        except pygame.error:
+            print("Warning: Tile PNGs not found. Using color fallbacks.")
+            self.grass_img = None
+            self.dirt_img = None
 
     def generate_map(self):
         # Simple random "procedural" for prototype; use Perlin later
@@ -25,5 +34,10 @@ class World:
             for y in range(start_y, end_y):
                 tile_rect = pygame.Rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
                 adjusted_rect = tile_rect.move(-camera_pos[0], -camera_pos[1])
-                color = COLORS['GREEN'] if self.tiles[x][y] == 0 else COLORS['BROWN']
-                pygame.draw.rect(screen, color, adjusted_rect)
+                tile_type = self.tiles[x][y]
+                if self.grass_img and self.dirt_img:  # Use images if loaded
+                    img = self.grass_img if tile_type == 0 else self.dirt_img
+                    screen.blit(img, adjusted_rect)
+                else:  # Fallback to colors
+                    color = COLORS['GREEN'] if tile_type == 0 else COLORS['BROWN']
+                    pygame.draw.rect(screen, color, adjusted_rect)
