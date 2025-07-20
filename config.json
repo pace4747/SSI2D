@@ -1,0 +1,15 @@
+{
+    "fps": 60,
+    "resolution": [
+        800,
+        600
+    ],
+    "key_bindings": {
+        "up": "w",
+        "down": "s",
+        "left": "a",
+        "right": "d",
+        "shoot": "f"
+    },
+    "volume": 1.0
+}
