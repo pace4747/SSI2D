@@ -16,6 +16,9 @@ class Game:
     def update(self, dt):
         keys = pygame.key.get_pressed()
         self.player.update_movement(keys, dt)
+        # Clamp player to world boundaries (fixes sprinting out)
+        self.player.rect.x = max(0, min(self.player.rect.x, self.world.width * TILE_SIZE - self.player.rect.width))
+        self.player.rect.y = max(0, min(self.player.rect.y, self.world.height * TILE_SIZE - self.player.rect.height))
         # Update camera to center player
         self.camera_pos[0] = self.player.rect.centerx - (VIRTUAL_WIDTH // 2)
         self.camera_pos[1] = self.player.rect.centery - (VIRTUAL_HEIGHT // 2)
