@@ -1,4 +1,5 @@
 import pygame
+import os  # Added for path handling
 
 TILE_SIZE = 16
 SCALE = 4
@@ -7,11 +8,12 @@ SCREEN_HEIGHT = 600
 VIRTUAL_WIDTH = SCREEN_WIDTH // SCALE
 VIRTUAL_HEIGHT = SCREEN_HEIGHT // SCALE
 FPS = 60
+ASSETS_PATH = 'assets'  # New: Base path for assets
 
 COLORS = {
     'BLACK': (0, 0, 0),
-    'GREEN': (0, 255, 0),  # Fixed to actual green
-    'BROWN': (139, 69, 19)  # Fixed dirt color, no alpha
+    'GREEN': (0, 255, 0),
+    'BROWN': (139, 69, 19)
 }
 
 BIOME_RATIOS = {'jungle': 0.4, 'swamp': 0.2, 'desert': 0.25, 'mountain': 0.15}
