@@ -1,14 +1,25 @@
 import pygame
+from pygame.locals import *
+from constants import *
+from game import Game
 
-TILE_SIZE = 16
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-SCALE = 4  # For pixel art crispness
-FPS = 60
+def main():
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    pygame.display.set_caption("Snakes and Spiders Island")
+    clock = pygame.time.Clock()
+    game = Game(screen)
+    running = True
 
-COLORS = {
-    'BLACK': (0, 0, 0),
-    'GREEN': (255, 255, 255),  # Placeholder for tiles
-}
+    while running:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                running = False
 
-BIOME_RATIOS = {'jungle': 0.4, 'swamp': 0.2, 'desert': 0.25, 'mountain': 0.15}
+        game.update()
+        game.draw()
+        clock.tick(FPS)
+
+    pygame.quit()
+
+if __name__ == "__main__":
+    main()
